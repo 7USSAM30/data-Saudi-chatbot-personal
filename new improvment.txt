@@ -1,0 +1,35 @@
+ What is a RAG Chatbot?
+A RAG (Retrieval-Augmented Generation) chatbot is an AI assistant that:
+Retrieves relevant information from a knowledge base (documents, web pages, databases, etc.) using semantic search (vector search).
+Augments the user’s question with this retrieved context.
+Generates a final answer using a large language model (LLM) like OpenAI GPT, Gemini, or Azure OpenAI.
+This approach allows the chatbot to answer questions using up-to-date, domain-specific, or private data—not just what the LLM was trained on.
+2. How Does Web Scraping Fit In?
+Web scraping is the process of automatically collecting data from websites. In a RAG system, you use web scraping to:
+Gather fresh, relevant information from the web (news, documentation, FAQs, etc.).
+Periodically update your knowledge base so your chatbot always has the latest info.
+3. What is a Vector Database?
+A vector database stores text data as high-dimensional vectors (embeddings). This allows you to:
+Search for the most semantically similar pieces of text to a user’s query.
+Retrieve relevant context even if the user’s wording is different from your documents.
+Popular vector DBs: Weaviate, Pinecone, Chroma, FAISS.
+4. How Does the Whole System Work?
+A. Data Collection (Web Scraping)
+Use tools like Playwright or Selenium to scrape web pages.
+Clean and preprocess the scraped text.
+B. Indexing (Vector Database)
+Split the text into chunks (paragraphs, sections, etc.).
+Generate embeddings for each chunk using an embedding model (OpenAI, HuggingFace, etc.).
+Store the chunks and their embeddings in a vector database.
+C. Chatbot Query Flow
+User asks a question.
+Embed the question using the same embedding model.
+Search the vector DB for the most similar chunks (context).
+Combine the context and the question into a prompt.
+Send the prompt to an LLM (like GPT-4, Gemini, etc.).
+Return the LLM’s answer to the user.
+
+
+
+
+
