@@ -9,7 +9,6 @@ DEPLOYMENT.md
 __pycache__/
 
 # Exclude development files
-node_modules/
 .next/
 .git/
 .gitignore

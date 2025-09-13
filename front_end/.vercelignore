@@ -6,7 +6,6 @@
 ../DEPLOYMENT.md
 
 # Exclude development files
-node_modules/
 .next/
 .git/
 .gitignore
