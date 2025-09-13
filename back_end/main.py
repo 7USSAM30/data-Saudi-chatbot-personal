@@ -24,6 +24,7 @@ app.add_middleware(
         "http://localhost:3000",  # Local development
         "https://*.vercel.app",   # Vercel deployments
         "https://*.railway.app",  # Railway deployments
+        "https://front-bujdweef6-hussams-projects-f4dd66f7.vercel.app",  # Your current Vercel URL
         "https://datasaudi-chatbot.vercel.app"  # Your specific Vercel URL
     ],
     allow_credentials=True,
@@ -32,6 +33,16 @@ app.add_middleware(
 )
 
 # --- API Endpoints ---
+@app.get("/")
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "ok", "message": "DataSaudi Chatbot API is running"}
+
+@app.get("/health")
+async def health():
+    """Alternative health check endpoint."""
+    return {"status": "healthy", "service": "datasaudi-chatbot"}
+
 @app.post("/api/ask")
 async def ask(request: Request):
     try:
