@@ -11,9 +11,9 @@
 2. Click "New Project" → "Deploy from GitHub repo"
 3. Connect your GitHub repository: `7USSAM30/data-Saudi-chatbot-personal`
 4. Configure the service:
-   - **Root Directory**: `back_end`
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - **Root Directory**: Leave empty (uses repository root)
+   - **Build Command**: `cd back_end && pip install -r requirements.txt`
+   - **Start Command**: `cd back_end && uvicorn main:app --host 0.0.0.0 --port $PORT`
    - Railway will auto-detect Python and use the railway.json config
 
 ### Environment Variables (Add in Railway Dashboard)
