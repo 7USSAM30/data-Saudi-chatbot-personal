@@ -23,6 +23,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",  # Local development
         "https://*.vercel.app",   # Vercel deployments
+        "https://*.railway.app",  # Railway deployments
         "https://datasaudi-chatbot.vercel.app"  # Your specific Vercel URL
     ],
     allow_credentials=True,

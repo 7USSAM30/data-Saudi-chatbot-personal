@@ -1,23 +1,22 @@
 # Deployment Guide
 
-## Backend Deployment (Render)
+## Backend Deployment (Railway)
 
 ### Prerequisites
-1. Create a Render account at https://render.com
+1. Create a Railway account at https://railway.app
 2. Connect your GitHub repository
 
 ### Steps
-1. Go to Render Dashboard
-2. Click "New +" → "Web Service"
-3. Connect your GitHub repository
+1. Go to Railway Dashboard
+2. Click "New Project" → "Deploy from GitHub repo"
+3. Connect your GitHub repository: `7USSAM30/data-Saudi-chatbot-personal`
 4. Configure the service:
-   - **Name**: `datasaudi-chatbot-backend`
-   - **Environment**: `Python 3`
-   - **Build Command**: `pip install -r back_end/requirements.txt`
-   - **Start Command**: `cd back_end && uvicorn main:app --host 0.0.0.0 --port $PORT`
-   - **Root Directory**: Leave empty (uses repository root)
+   - **Root Directory**: `back_end`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - Railway will auto-detect Python and use the railway.json config
 
-### Environment Variables (Add in Render Dashboard)
+### Environment Variables (Add in Railway Dashboard)
 ```
 OPENAI_API_KEY=your_openai_api_key_here
 WEAVIATE_URL=your_weaviate_url_here
@@ -25,7 +24,7 @@ WEAVIATE_API_KEY=your_weaviate_api_key_here
 ```
 
 ### After Deployment
-- Note down your Render app URL (e.g., `https://datasaudi-chatbot-backend.onrender.com`)
+- Note down your Railway app URL (e.g., `https://datasaudi-chatbot-backend-production.up.railway.app`)
 - This will be used for the frontend API URL
 
 ---
@@ -48,7 +47,7 @@ WEAVIATE_API_KEY=your_weaviate_api_key_here
 
 ### Environment Variables (Add in Vercel Dashboard)
 ```
-NEXT_PUBLIC_API_URL=https://your-render-app.onrender.com
+NEXT_PUBLIC_API_URL=https://your-railway-app.up.railway.app
 ```
 
 ### After Deployment
@@ -59,16 +58,16 @@ NEXT_PUBLIC_API_URL=https://your-render-app.onrender.com
 
 ## Testing
 
-1. Test the backend API endpoint: `https://your-render-app.onrender.com/api/ask`
+1. Test the backend API endpoint: `https://your-railway-app.up.railway.app/api/ask`
 2. Test the frontend: Your Vercel URL
 3. Verify the chat functionality works end-to-end
 
 ## Troubleshooting
 
 ### Backend Issues
-- Check Render logs for startup errors
+- Check Railway logs for startup errors
 - Ensure all environment variables are set
-- Verify the Procfile is correct
+- Verify the railway.json configuration is correct
 
 ### Frontend Issues
 - Check Vercel build logs
