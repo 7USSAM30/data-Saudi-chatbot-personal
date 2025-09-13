@@ -190,9 +190,12 @@ cython_debug/
 
 # Data files - all data is stored in Weaviate Cloud
 back_end/data/
-*.json
 *.csv
 *.xlsx
+
+# Exclude data JSON files but allow config JSON files
+back_end/data/*.json
+back_end/agents/prompts.json
 
 # Local data files that should not be committed
 back_end/data/apis/
