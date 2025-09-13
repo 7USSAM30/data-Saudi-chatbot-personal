@@ -64,21 +64,6 @@ async def ask(request: Request):
             
         logger.info(f"Received question: {question}")
         
-        # Test environment variables first
-        openai_key = os.getenv("OPENAI_API_KEY")
-        weaviate_url = os.getenv("WEAVIATE_URL")
-        weaviate_key = os.getenv("WEAVIATE_API_KEY")
-        
-        logger.info(f"OpenAI API Key present: {bool(openai_key)}")
-        logger.info(f"Weaviate URL present: {bool(weaviate_url)}")
-        logger.info(f"Weaviate API Key present: {bool(weaviate_key)}")
-        
-        if not openai_key:
-            return JSONResponse(status_code=500, content={"error": "OpenAI API key not configured."})
-        
-        if not weaviate_url or not weaviate_key:
-            return JSONResponse(status_code=500, content={"error": "Weaviate configuration missing."})
-        
         # Get the answer and sources from the agent
         result = await answer_user_question_async(question)
         
