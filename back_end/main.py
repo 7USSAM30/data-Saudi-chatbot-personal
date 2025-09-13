@@ -46,7 +46,17 @@ async def health():
 @app.post("/api/ask")
 async def ask(request: Request):
     try:
-        data = await request.json()
+        # Check if request has body
+        body = await request.body()
+        if not body:
+            return JSONResponse(status_code=400, content={"error": "Request body is required."})
+        
+        # Parse JSON
+        try:
+            data = await request.json()
+        except Exception as json_error:
+            return JSONResponse(status_code=400, content={"error": f"Invalid JSON: {str(json_error)}"})
+        
         question = data.get("question")
         
         if not question:
