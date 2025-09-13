@@ -4,15 +4,40 @@ import { useState, useRef, useEffect } from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
+import TextCursor from '../components/TextCursor';
 
 export default function Home() {
   const [messages, setMessages] = useState<{ sender: 'user' | 'bot', text: string, context?: string[] }[]>([]);
   const [input, setInput] = useState('');
+  const [showCursor, setShowCursor] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Track mouse position to show/hide cursor when outside chat box
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!chatBoxRef.current) return;
+      
+      const chatBox = chatBoxRef.current.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      
+      // Check if mouse is outside the chat box
+      const isOutside = mouseX < chatBox.left || 
+                       mouseX > chatBox.right || 
+                       mouseY < chatBox.top || 
+                       mouseY > chatBox.bottom;
+      
+      setShowCursor(isOutside);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -60,19 +85,23 @@ export default function Home() {
           <Typewriter
             words={[
               'Welcome to DataSaudi Chatbot',
-              'Your gateway to Saudi Arabia\'s data.',
+              'Saudi Arabia\'s official data platform.',
               'Ask me about economy, population, and more!',
             ]}
             loop={0}
             cursor
-            cursorStyle="_"
+            cursorStyle="|"
             typeSpeed={70}
             deleteSpeed={50}
             delaySpeed={2000}
           />
         </h1>
       </div>
-      <div className="w-full max-w-xl flex flex-col rounded-3xl shadow-2xl p-0 animate-fadein border border-white/30" style={{ minHeight: 500, height: 500, background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' }}>
+      <div 
+        ref={chatBoxRef}
+        className="w-full max-w-xl flex flex-col rounded-3xl shadow-2xl p-0 animate-fadein border border-white/30" 
+        style={{ minHeight: 500, height: 500, background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' }}
+      >
         {/* Chat area */}
         <div className="flex-1 overflow-y-auto px-6 pt-6" style={{ minHeight: 0 }}>
           {messages.length === 0 && (
@@ -152,6 +181,38 @@ export default function Home() {
           </button>
         </div>
       </div>
+      
+      {/* Personal Project Notice */}
+      <div className="mt-8 text-center text-sm text-gray-600 max-w-md">
+        <p className="mb-2">
+          <strong>Note:</strong> This is a personal project demonstration.
+        </p>
+        <p>
+          For official DataSaudi services, please visit the 
+          <a 
+            href="https://www.datasaudi.sa" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline ml-1"
+          >
+            official DataSaudi website
+          </a>
+          .
+        </p>
+      </div>
+      
+      {/* Custom TextCursor with DataSaudi Logo */}
+      <TextCursor 
+        text="datasaudi" 
+        isVisible={showCursor}
+        spacing={80}
+        maxPoints={3}
+        randomFloat={true}
+        followMouseDirection={true}
+        exitDuration={0.3}
+        removalInterval={50}
+      />
+      
       <style jsx global>{`
         @keyframes fadein {
           from { opacity: 0; transform: translateY(20px); }
