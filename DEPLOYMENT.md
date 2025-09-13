@@ -13,8 +13,8 @@
 4. Configure the service:
    - **Root Directory**: `back_end` (IMPORTANT: Set this to back_end)
    - **Build Command**: Leave empty (Railway will auto-detect)
-   - **Start Command**: Leave empty (uses railway.json config)
-   - Railway will auto-detect Python and use the railway.json config
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - Railway will auto-detect Python and use the manual start command
 
 ### Environment Variables (Add in Railway Dashboard)
 ```
@@ -65,9 +65,19 @@ NEXT_PUBLIC_API_URL=https://your-railway-app.up.railway.app
 ## Troubleshooting
 
 ### Backend Issues
+
+#### "No start command was found" Error
+If you see this error, follow these steps:
+1. **Delete the current Railway service** and recreate it
+2. **Set Root Directory to `back_end`** in Railway dashboard
+3. **Manually set Start Command** to: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+4. **Leave Build Command empty** (Railway will auto-detect)
+
+#### General Backend Issues
 - Check Railway logs for startup errors
 - Ensure all environment variables are set
-- Verify the railway.json configuration is correct
+- Verify the Root Directory is set to `back_end`
+- Make sure the Start Command is set manually in the dashboard
 
 ### Frontend Issues
 - Check Vercel build logs
