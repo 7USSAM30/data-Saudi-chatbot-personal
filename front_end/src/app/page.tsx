@@ -85,7 +85,7 @@ export default function Home() {
         <h1 className="text-2xl md:text-3xl font-bold text-blue-900 text-center transition-all duration-500">
           <Typewriter
             words={[
-              'Welcome to DataSaudi Chatbot',
+              'Welcome to DataSaudi Chatbot!!',
               'Saudi Arabia\'s official data platform.',
               'Ask me about economy, population, and more!',
             ]}
