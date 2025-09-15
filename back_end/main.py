@@ -96,9 +96,14 @@ async def ask(request: Request):
 def run_api():
     """Runs the FastAPI server."""
     port = int(os.getenv("PORT", 8000))  # Use Railway's PORT or default to 8000
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    logger.info(f"Starting server on port: {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 if __name__ == "__main__":
+    logger.info("=== DataSaudi Chatbot Backend Starting ===")
+    logger.info(f"Current working directory: {os.getcwd()}")
+    logger.info(f"PORT environment variable: {os.getenv('PORT', 'NOT SET')}")
+    
     import argparse
     parser = argparse.ArgumentParser(description="Run the Data Saudi Chatbot backend.")
     parser.add_argument('--run-pipeline', action='store_true', help='Run the data processing pipeline instead of the API.')
@@ -115,4 +120,8 @@ if __name__ == "__main__":
             exit(1)
     else:
         logger.info("Starting the FastAPI server...")
-        run_api()
+        try:
+            run_api()
+        except Exception as e:
+            logger.error(f"Failed to start server: {e}")
+            raise
