@@ -195,7 +195,6 @@ back_end/data/
 
 # Exclude data JSON files but allow config JSON files
 back_end/data/*.json
-back_end/agents/prompts.json
 
 # Local data files that should not be committed
 back_end/data/apis/
