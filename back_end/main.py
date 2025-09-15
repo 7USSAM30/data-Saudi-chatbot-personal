@@ -40,6 +40,11 @@ async def health():
     """Alternative health check endpoint."""
     return {"status": "healthy", "service": "datasaudi-chatbot"}
 
+@app.get("/test")
+async def test():
+    """Simple test endpoint."""
+    return {"message": "Test endpoint working", "timestamp": "2025-09-15"}
+
 @app.post("/api/ask")
 async def ask(request: Request):
     try:
