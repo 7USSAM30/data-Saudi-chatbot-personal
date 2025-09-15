@@ -6,9 +6,16 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 
-# Adjust the import path for answer_agent
-from agents.answer_agent import answer_user_question_async 
-from pipeline import main as run_pipeline
+# Adjust the import path for answer_agent - with error handling
+try:
+    from agents.answer_agent import answer_user_question_async 
+    from pipeline import main as run_pipeline
+    logger.info("Successfully imported agent modules")
+except ImportError as e:
+    logger.error(f"Failed to import agent modules: {e}")
+    # Set fallback functions
+    answer_user_question_async = None
+    run_pipeline = None
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -66,6 +73,13 @@ async def ask(request: Request):
         logger.info(f"Received question: {question}")
         
         # Get the answer and sources from the agent
+        if answer_user_question_async is None:
+            logger.warning("Agent module not available, using fallback response")
+            return JSONResponse(content={
+                "answer": f"I received your question: '{question}'. The agent system is currently unavailable, but the API is working! Please check the backend logs.",
+                "context": ["Fallback response - agent module unavailable"]
+            })
+        
         result = await answer_user_question_async(question)
         
         logger.info(f"Answer: {result['answer']}")
@@ -82,7 +96,8 @@ async def ask(request: Request):
 
 def run_api():
     """Runs the FastAPI server."""
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))  # Use Railway's PORT or default to 8000
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     import argparse
@@ -91,6 +106,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.run_pipeline:
+        if run_pipeline is None:
+            logger.error("Pipeline module not available")
+            return
         logger.info("Starting the data processing pipeline...")
         asyncio.run(run_pipeline())
         logger.info("Pipeline finished.")
