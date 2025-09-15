@@ -45,6 +45,18 @@ async def test():
     """Simple test endpoint."""
     return {"message": "Test endpoint working", "timestamp": "2025-09-15"}
 
+@app.post("/api/pipeline")
+async def run_pipeline():
+    """Run the data processing pipeline to populate Weaviate."""
+    try:
+        from back_end.pipeline import main as run_pipeline_main
+        logger.info("Starting data processing pipeline...")
+        await run_pipeline_main()
+        return JSONResponse(content={"status": "success", "message": "Pipeline completed successfully"})
+    except Exception as e:
+        logger.error(f"Pipeline error: {e}")
+        return JSONResponse(status_code=500, content={"error": f"Pipeline failed: {str(e)}"})
+
 @app.post("/api/ask")
 async def ask(request: Request):
     try:
