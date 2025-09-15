@@ -49,7 +49,7 @@ export default function Home() {
       { sender: 'bot', text: 'Thinking...' }
     ]);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://data-saudi-chatbot-personal-production.up.railway.app';
       const res = await fetch(`${apiUrl}/api/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
