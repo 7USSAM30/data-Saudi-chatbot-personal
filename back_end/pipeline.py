@@ -1,13 +1,13 @@
 import asyncio
 import logging
 import os
-from back_end.scraping.scraper import scrape_site_async, scrape_api_data_async
-from back_end.processing.chunking import chunk_data_async, save_chunks_async
-from back_end.embedding.embedder import embed_chunks_async
-from back_end.scraping.api_fetcher import fetch_and_save_api
-from back_end.weaviate_db import upload_chunks_with_embeddings, create_schema
+from scraping.scraper import scrape_site_async, scrape_api_data_async
+from processing.chunking import chunk_data_async, save_chunks_async
+from embedding.embedder import embed_chunks_async
+from scraping.api_fetcher import fetch_and_save_api
+from weaviate_db import upload_chunks_with_embeddings, create_schema
 # If you want to allow user questions:
-from back_end.agents.answer_agent import answer_user_question_async
+from agents.answer_agent import answer_user_question_async
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
