@@ -74,14 +74,14 @@ async def ask(request: Request):
         except ImportError as import_error:
             logger.error(f"Agent import failed: {import_error}")
             return JSONResponse(content={
-                "answer": f"I received your question: '{question}'. The agent system is currently unavailable, but the API is working! Please check the backend logs.",
-                "context": ["Fallback response - agent import failed"]
+                "answer": f"I received your question: '{question}'. The agent system is currently unavailable due to missing dependencies. Please check the backend logs for details.",
+                "context": ["Fallback response - agent import failed", f"Error: {str(import_error)}"]
             })
         except Exception as agent_error:
             logger.error(f"Agent error: {agent_error}")
             return JSONResponse(content={
-                "answer": f"I received your question: '{question}'. The agent system encountered an error. Please check the backend logs.",
-                "context": ["Fallback response - agent error"]
+                "answer": f"I received your question: '{question}'. The agent system encountered an error. Please check the backend logs for details.",
+                "context": ["Fallback response - agent error", f"Error: {str(agent_error)}"]
             })
         
     except Exception as e:
