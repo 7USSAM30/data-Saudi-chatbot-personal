@@ -66,7 +66,7 @@ async def ask(request: Request):
         
         # Try to import and use the agent system
         try:
-            from agents.answer_agent import answer_user_question_async
+            from back_end.agents.answer_agent import answer_user_question_async
             result = await answer_user_question_async(question)
             
             logger.info(f"Answer: {result['answer']}")
@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
     if args.run_pipeline:
         try:
-            from pipeline import main as run_pipeline
+            from back_end.pipeline import main as run_pipeline
             logger.info("Starting the data processing pipeline...")
             asyncio.run(run_pipeline())
             logger.info("Pipeline finished.")
