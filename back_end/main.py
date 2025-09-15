@@ -24,8 +24,9 @@ app.add_middleware(
         "http://localhost:3000",  # Local development
         "https://*.vercel.app",   # Vercel deployments
         "https://*.railway.app",  # Railway deployments
-        "https://front-bujdweef6-hussams-projects-f4dd66f7.vercel.app",  # Your current Vercel URL
-        "https://datasaudi-chatbot.vercel.app"  # Your specific Vercel URL
+        "https://data-saudi-chatbot-personal.vercel.app",  # Your current Vercel URL
+        "https://data-saudi-chatbot-personal-git-main-hussams-projects-f4dd66f7.vercel.app",  # Alternative Vercel URL
+        "https://data-saudi-chatbot-personal-fp9680dv5-hussams-projects-f4dd66f7.vercel.app",  # Alternative Vercel URL
     ],
     allow_credentials=True,
     allow_methods=["*"],
