@@ -108,7 +108,7 @@ if __name__ == "__main__":
     if args.run_pipeline:
         if run_pipeline is None:
             logger.error("Pipeline module not available")
-            return
+            exit(1)
         logger.info("Starting the data processing pipeline...")
         asyncio.run(run_pipeline())
         logger.info("Pipeline finished.")
