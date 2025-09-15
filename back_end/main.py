@@ -6,6 +6,10 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 
+# Configure logging FIRST
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Adjust the import path for answer_agent - with error handling
 try:
     from agents.answer_agent import answer_user_question_async 
@@ -16,10 +20,6 @@ except ImportError as e:
     # Set fallback functions
     answer_user_question_async = None
     run_pipeline = None
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # --- FastAPI App ---
 app = FastAPI()
