@@ -50,20 +50,35 @@ export default function Home() {
     ]);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://data-saudi-chatbot-personal-production.up.railway.app';
+      console.log('API URL:', apiUrl);
+      console.log('Sending question:', userInput);
+      
       const res = await fetch(`${apiUrl}/api/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userInput }),
       });
+      
+      console.log('Response status:', res.status);
+      console.log('Response headers:', res.headers);
+      
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      
       const data = await res.json();
+      console.log('Response data:', data);
+      
       setMessages((msgs) => [
         ...msgs.slice(0, -1), // Remove "Thinking..."
         { sender: 'bot', text: data.answer, context: data.context }
       ]);
-    } catch {
+    } catch (error) {
+      console.error('Error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setMessages((msgs) => [
         ...msgs.slice(0, -1),
-        { sender: 'bot', text: 'Sorry, there was an error connecting to the server.' }
+        { sender: 'bot', text: `Sorry, there was an error: ${errorMessage}` }
       ]);
     }
   };
