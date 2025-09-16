@@ -49,7 +49,7 @@ export default function Home() {
       { sender: 'bot', text: 'Thinking...' }
     ]);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://data-saudi-chatbot-personal-production.up.railway.app';
+      const apiUrl = 'https://data-saudi-chatbot-personal-production.up.railway.app';
       console.log('API URL:', apiUrl);
       console.log('Sending question:', userInput);
       
